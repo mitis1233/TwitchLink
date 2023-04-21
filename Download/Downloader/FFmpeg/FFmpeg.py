@@ -55,7 +55,7 @@ class FFmpeg(QtCore.QObject):
         return audioCodec if isAudioOnly else (*self.getVideoCodecParams(fileFormat, remux=remux), *audioCodec)
 
     def getVideoCodecParams(self, fileFormat, remux):
-        return ("-c:v", "copy") if remux else ("-c:v", "libx264")
+        return ("-c:v", "copy") if remux else ("-c:v", "hevc_nvenc")
 
     def getAudioCodecParams(self, fileFormat, remux):
         return ("-c:a", "libmp3lame") if fileFormat == "mp3" else (("-c:a", "copy") if remux else ("-c:a", "aac"))
