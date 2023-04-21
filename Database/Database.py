@@ -89,9 +89,9 @@ class General(Codable):
 
 class Templates(Codable):
     def __init__(self):
-        self._streamFilename = "[{type}] [{channel_name}] [{date}] {title} {resolution}"
-        self._videoFilename = "[{type}] [{channel_name}] [{date}] {title} {resolution}"
-        self._clipFilename = "[{type}] [{channel_name}] {title}"
+        self._streamFilename = "{year}{month}{day}_{channel_name}_{title}"
+        self._videoFilename = "[{year}{month}{day}_{channel_name}_{title}"
+        self._clipFilename = "{year}{month}{day}_{channel_name}_{title}"
 
     def setStreamFilename(self, streamFilename):
         self._streamFilename = streamFilename

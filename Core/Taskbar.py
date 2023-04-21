@@ -51,7 +51,10 @@ class Taskbar(QtCore.QObject):
     def setValue(self, value):
         if self.isPaused() or self.isStopped():
             self.resume()
-        self.taskbarProgress.setValue(value)
+        try:
+            self.taskbarProgress.setValue(int(value))
+        except OverflowError:
+            self.taskbarProgress.setValue(int(str(value)[3]))
 
     def complete(self):
         self.hide()
