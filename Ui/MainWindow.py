@@ -216,13 +216,13 @@ class MainWindow(QtWidgets.QMainWindow, UiFile.mainWindow, WindowGeometryManager
         return f"[{channel.displayName}] [{T(downloadInfo.type.toString())}] {downloadInfo.videoData.title}"
 
     def showContributeInfo(self, downloadStats):
-        if downloadStats["totalFiles"] < DownloadEngineConfig.SHOW_STATS[0]:
-            showContributeInfo = downloadStats["totalFiles"] in DownloadEngineConfig.SHOW_STATS[1]
-        else:
+        #if downloadStats["totalFiles"] < DownloadEngineConfig.SHOW_STATS[0]:
+        #    showContributeInfo = downloadStats["totalFiles"] in DownloadEngineConfig.SHOW_STATS[1]
+        #else:
             showContributeInfo = downloadStats["totalFiles"] % DownloadEngineConfig.SHOW_STATS[0] == 0
-        if showContributeInfo:
-            if self.ask("contribute", T("#You have downloaded a total of {totalFiles}({totalSize}) videos so far.\nPlease become a patron of {appName} for better functionality and service.", totalFiles=downloadStats["totalFiles"], totalSize=Utils.formatByteSize(downloadStats["totalByteSize"]), appName=Config.APP_NAME), contentTranslate=False, defaultOk=True):
-                Utils.openUrl(Utils.joinUrl(Config.HOMEPAGE_URL, "donate", params={"lang": Translator.getLanguage()}))
+        #if showContributeInfo:
+            #if self.ask("contribute", T("#You have downloaded a total of {totalFiles}({totalSize}) videos so far.\nPlease become a patron of {appName} for better functionality and service.", totalFiles=downloadStats["totalFiles"], totalSize=Utils.formatByteSize(downloadStats["totalByteSize"]), appName=Config.APP_NAME), contentTranslate=False, defaultOk=True):
+                #Utils.openUrl(Utils.joinUrl(Config.HOMEPAGE_URL, "donate", params={"lang": Translator.getLanguage()}))
 
     def confirmShutdown(self):
         if GlobalDownloadManager.isDownloaderRunning() and not GlobalDownloadManager.isShuttingDown():

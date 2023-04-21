@@ -139,8 +139,8 @@ class DownloadButton(QtCore.QObject):
                 self.info(*Messages.INFO.AUTHENTICATION_ERROR)
             else:
                 self.info(*Messages.INFO.TEMPORARY_ERROR)
-        elif isinstance(exception, ContentManager.Exceptions.RestrictedContent):
-            self.handleRestrictedContent(exception)
+        #elif isinstance(exception, ContentManager.Exceptions.RestrictedContent):
+        #    self.handleRestrictedContent(exception)
         else:
             self.info(*Messages.INFO.NETWORK_ERROR)
 

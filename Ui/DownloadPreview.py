@@ -178,7 +178,10 @@ class DownloadPreview(QtWidgets.QWidget, UiFile.downloadPreview):
                     encodingString = f"{encodingString} [{T('clipping-mode')}]"
             self.status.setText(f"{encodingString} ({T('download-skipped')})" if status.isDownloadSkipped() else encodingString)
             self.progressBar.setRange(0, 100)
-            self.progressBar.setValue(self.downloader.progress.timeProgress)
+            try:
+                self.progressBar.setValue(int(self.downloader.progress.timeProgress))
+            except OverflowError:
+                self.progressBar.setValue(int(str(self.downloader.progress.timeProgress)[3]))
             self.pauseButton.hide()
         else:
             self.status.setText(T("downloading-updated-files" if status.isUpdateFound() else "downloading", ellipsis=True))
@@ -198,10 +201,16 @@ class DownloadPreview(QtWidgets.QWidget, UiFile.downloadPreview):
         self.duration.setText(Utils.formatTime(*Utils.toTime(progress.seconds)))
 
     def handleVideoProgress(self, progress):
-        self.progressBar.setValue(progress.timeProgress if self.downloader.status.isEncoding() else progress.fileProgress)
+        try:
+            self.progressBar.setValue(int(progress.timeProgress if self.downloader.status.isEncoding() else progress.fileProgress))
+        except OverflowError:
+            self.progressBar.setValue(int(str(progress.timeProgress if self.downloader.status.isEncoding() else progress.fileProgress)[3]))
 
     def handleClipProgress(self, progress):
-        self.progressBar.setValue(progress.sizeProgress)
+        try:
+            self.progressBar.setValue(int(progress.sizeProgress))
+        except OverflowError:
+            self.progressBar.setValue(int(str(progress.sizeProgress)[3]))
 
     def handleVideoDataUpdate(self, data):
         playlistManager = data.get("playlistManager")

@@ -228,8 +228,14 @@ class Download(QtWidgets.QWidget, UiFile.download):
         self.currentSize.setText(progress.size)
 
     def handleVideoProgress(self, progress):
-        self.downloadProgressBar.setValue(progress.fileProgress)
-        self.encodingProgressBar.setValue(progress.timeProgress)
+        try:
+            self.downloadProgressBar.setValue(int(progress.fileProgress))
+        except OverflowError:
+            self.downloadProgressBar.setValue(int(str(progress.fileProgress)[3]))
+        try:
+            self.encodingProgressBar.setValue(int(progress.timeProgress))
+        except OverflowError:
+            self.encodingProgressBar.setValue(int(str(progress.timeProgress)[3]))
         self.currentDuration.setText(f"{Utils.formatTime(*Utils.toTime(progress.seconds))} / {Utils.formatTime(*Utils.toTime(progress.totalSeconds))}")
         if progress.mutedFiles != 0:
             self.mutedInfo.show()
@@ -240,7 +246,10 @@ class Download(QtWidgets.QWidget, UiFile.download):
         self.currentSize.setText(progress.size)
 
     def handleClipProgress(self, progress):
-        self.downloadProgressBar.setValue(progress.sizeProgress)
+        try:
+            self.downloadProgressBar.setValue(int(progress.sizeProgress))
+        except OverflowError:
+            self.downloadProgressBar.setValue(int(str(progress.sizeProgress)[3]))
         self.currentSize.setText(progress.size)
 
     def handleVideoDataUpdate(self, data):
